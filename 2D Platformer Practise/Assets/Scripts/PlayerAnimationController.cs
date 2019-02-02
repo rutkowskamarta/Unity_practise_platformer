@@ -19,5 +19,6 @@ public class PlayerAnimationController : MonoBehaviour {
     private void SetAnimatorProperties()
     {
         animator.SetBool("IsJumping", playerControllerScript.IsJumping);
+        animator.SetBool("IsWalking", playerControllerScript.IsWalking);
     }
 }

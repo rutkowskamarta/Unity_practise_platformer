@@ -11,11 +11,12 @@ public class PlayerController : MonoBehaviour
     
     private Rigidbody2D playerRigidbody;
     private SpriteRenderer playerSpriteRenderer;
-    private bool isGrounded = false;
+    private bool isGrounded;
+
     public bool IsJumping = false;
-    
+    public bool IsWalking = false;
+
     private float jumpTimeCounter = 0;
-    private Animation playerAnimation;
 
     void Start()
     {
@@ -31,32 +32,37 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+
     private void PlayerMovement()
     {
         if (Input.GetKey(KeyCode.A))
         {
             playerRigidbody.velocity = new Vector2(-movementSpeed, playerRigidbody.velocity.y);
             playerSpriteRenderer.flipX = true;
-
-
+            IsWalking = true;
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             playerRigidbody.velocity = new Vector2(movementSpeed, playerRigidbody.velocity.y);
             playerSpriteRenderer.flipX = false;
+            IsWalking = true;
 
         }
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Ground")
+        else
         {
-            isGrounded = true;
-        }
-    }
+            playerRigidbody.velocity = new Vector2(0, playerRigidbody.velocity.y);
+            IsWalking = false;
 
+        }
+
+    }
 
     private void PlayerStopMove()
     {

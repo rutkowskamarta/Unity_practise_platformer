@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class CameraFollower : MonoBehaviour {
 
-    [SerializeField] private Transform target;
-    [SerializeField] private float smoothSpeed = 10f;
+    [SerializeField] private GameObject target;
+    [SerializeField] private float smoothSpeed = 0.1f;
+    [SerializeField] private float minSpeed = 10f;
+    [SerializeField] private float maxSpeed = 100f;
     [SerializeField] private Vector3 offset;
 
-	void LateUpdate () {
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothPosition;
+	void LateUpdate ()
+    {
+        SmoothCameraMovement();
 	}
+
+    private void SmoothCameraMovement()
+    {
+        float currentTargetSpeed = target.GetComponent<Rigidbody2D>().velocity.magnitude;
+        float relativeSpeed = Mathf.InverseLerp(minSpeed, maxSpeed, currentTargetSpeed);
+        relativeSpeed = Mathf.SmoothStep(smoothSpeed, 1, relativeSpeed);
+
+        Vector3 desiredPosition = target.transform.position + offset;
+        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, relativeSpeed);
+        transform.position = smoothPosition;
+    }
 }
