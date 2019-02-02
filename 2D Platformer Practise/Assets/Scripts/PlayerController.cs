@@ -7,21 +7,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private float jumpSpeed = 1;
     [SerializeField] private float jumpTime = 0.5f;
-    [SerializeField] private AnimationClip playerAnimationRight;
-    
+    [SerializeField] private GameObject playerBody;
     
     private Rigidbody2D playerRigidbody;
     private SpriteRenderer playerSpriteRenderer;
     private bool isGrounded = false;
-    private bool isJumping = false;
+    public bool IsJumping = false;
+    
     private float jumpTimeCounter = 0;
     private Animation playerAnimation;
 
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        playerAnimation = GetComponent<Animation>();
+        playerSpriteRenderer = playerBody.GetComponent<SpriteRenderer>();
         
     }
 
@@ -69,20 +68,19 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
         {
             playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, jumpSpeed);
             isGrounded = false;
-            isJumping = true;
+            IsJumping = true;
             jumpTimeCounter = jumpTime;
-            JumpRotationAnimation();
         }
         PlayerLongerJump();
     }
 
     private void PlayerLongerJump()
     {
-        if (Input.GetKey(KeyCode.Space) && isJumping)
+        if (Input.GetKey(KeyCode.Space) && IsJumping)
         {
             if (jumpTimeCounter > 0)
             {
@@ -93,18 +91,14 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                isJumping = false;
+                IsJumping = false;
             }
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            isJumping = false;
+            IsJumping = false;
         }
     }
 
-    private void JumpRotationAnimation()
-    {
-        playerAnimation.clip = playerAnimationRight;
-        playerAnimation.Play();
-    }
+  
 }
