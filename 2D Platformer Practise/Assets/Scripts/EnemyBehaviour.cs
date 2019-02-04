@@ -4,31 +4,30 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour {
 
-    //z portali będą wychodzić wrogowie, a my jak w niego wejdziemy to scene fade
-
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private GameObject enemyBody;
-    
+    [SerializeField] private GameObject lowerBound;
 
     private Rigidbody2D enemyRigidbody;
     private SpriteRenderer enemySpriteRenderer;
-    private int startMoveDirection;
+    private int motionDirection;
     
     void Start ()
     {
         enemyRigidbody = GetComponent<Rigidbody2D>();
         enemySpriteRenderer = enemyBody.GetComponent<SpriteRenderer>();
-        startMoveDirection = ChooseRandomDirection();
+        motionDirection = ChooseRandomDirection();
     }
 	
 	void Update ()
     {
         Move();
+        DestroyWhenOffTheMap();
 	}
 
     private void Move()
     {
-        enemyRigidbody.velocity = new Vector2(startMoveDirection* movementSpeed, enemyRigidbody.velocity.y);
+        enemyRigidbody.velocity = new Vector2(motionDirection* movementSpeed, enemyRigidbody.velocity.y);
         if (enemyRigidbody.velocity.x > 0)
         {
             enemySpriteRenderer.flipX = false;
@@ -37,7 +36,21 @@ public class EnemyBehaviour : MonoBehaviour {
         {
             enemySpriteRenderer.flipX = true;
         }
+       
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Platform")
+        {
+            ChangeDirection();
+        }
+        
+    }
+
+    private void ChangeDirection()
+    {
+        motionDirection *= -1;
     }
 
     private int ChooseRandomDirection()
@@ -51,6 +64,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private void DestroyWhenOffTheMap()
     {
-
+        if (transform.position.y <= lowerBound.transform.position.y)
+            Destroy(gameObject);
     }
 }

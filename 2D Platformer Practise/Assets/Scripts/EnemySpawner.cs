@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour {
+    [SerializeField] private float spawnFrequency = 0.2f; //how many per second
+    [SerializeField] private int enemiesLimit = 10;
+    [SerializeField] private GameObject enemyPrefab;
 
-	// Use this for initialization
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
