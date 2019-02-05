@@ -7,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private GameObject enemyBody;
     [SerializeField] private GameObject lowerBound;
+    [SerializeField] private PlayerController player;
     
 
     private Rigidbody2D enemyRigidbody;
@@ -46,6 +47,11 @@ public class EnemyBehaviour : MonoBehaviour {
         {
             ChangeDirection();
         }
+        if(collision.gameObject.tag == "Player")
+        {
+            player.PlayersRecoil(motionDirection);
+        }
+       
         
     }
 

@@ -11,10 +11,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fadeSpeed = 1f;
     [SerializeField] private float fadeTime = 0.5f;
     [SerializeField] private SpriteRenderer hurtMaskSprite;
+    [SerializeField] private float recoilForce = 10;
+
     
     private Rigidbody2D playerRigidbody;
     private SpriteRenderer playerSpriteRenderer;
     private bool isGrounded;
+    private bool isRecoiled = false;
 
     public bool IsJumping = false;
     public bool IsWalking = false;
@@ -40,10 +43,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
+            isRecoiled = false;
         }
         if(collision.gameObject.tag == "Enemy")
         {
-            PlayersRecoil();
             StartCoroutine(FadeHurtVisualisation(1.0f, fadeSpeed));
             StartCoroutine(RestoreNormalLook());
 
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
             IsWalking = true;
 
         }
-        else
+        else if(!isRecoiled)
         {
             playerRigidbody.velocity = new Vector2(0, playerRigidbody.velocity.y);
             IsWalking = false;
@@ -132,11 +135,13 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(fadeTime);
         StartCoroutine(FadeHurtVisualisation(0f, fadeSpeed));
-
     }
 
-    private void PlayersRecoil()
+    public void PlayersRecoil(int modifier)
     {
-        playerRigidbody.AddForce(new Vector2(playerRigidbody.velocity.x, jumpSpeed));
+        isRecoiled = true;
+        playerRigidbody.AddForce(new Vector2(modifier*recoilForce, recoilForce), ForceMode2D.Impulse);
     }
+
+   
 }

@@ -244,7 +244,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -284,6 +284,7 @@ MonoBehaviour:
   fadeSpeed: 2
   fadeTime: 0.5
   hurtMaskSprite: {fileID: 1314077914}
+  recoilForce: 5
   IsJumping: 0
   IsWalking: 0
 --- !u!4 &162246334
@@ -814,6 +815,7 @@ MonoBehaviour:
   movementSpeed: 1
   enemyBody: {fileID: 348266448}
   lowerBound: {fileID: 1372800687}
+  player: {fileID: 162246333}
 --- !u!1 &1314077912
 GameObject:
   m_ObjectHideFlags: 0
