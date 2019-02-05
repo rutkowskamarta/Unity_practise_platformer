@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed = 1;
     [SerializeField] private float jumpTime = 0.5f;
     [SerializeField] private GameObject playerBody;
+    [SerializeField] private float fadeSpeed = 1f;
+    [SerializeField] private float fadeTime = 0.5f;
+    [SerializeField] private SpriteRenderer hurtMaskSprite;
     
     private Rigidbody2D playerRigidbody;
     private SpriteRenderer playerSpriteRenderer;
@@ -34,9 +37,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
+        }
+        if(collision.gameObject.tag == "Enemy")
+        {
+            PlayersRecoil();
+            StartCoroutine(FadeHurtVisualisation(1.0f, fadeSpeed));
+            StartCoroutine(RestoreNormalLook());
+
         }
     }
 
@@ -106,5 +116,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-  
+
+    private IEnumerator FadeHurtVisualisation(float alphaValue, float duration) 
+    {
+        float alpha = hurtMaskSprite.color.a;
+        for (float t = 0.0f; t < duration; t += Time.deltaTime / fadeTime)
+        {
+            Color newColor = new Color(hurtMaskSprite.color.r, hurtMaskSprite.color.g, hurtMaskSprite.color.g , Mathf.Lerp(alpha, alphaValue, t));
+            hurtMaskSprite.color = newColor;
+            yield return null;
+        }
+    }
+
+    private IEnumerator RestoreNormalLook()
+    {
+        yield return new WaitForSeconds(fadeTime);
+        StartCoroutine(FadeHurtVisualisation(0f, fadeSpeed));
+
+    }
+
+    private void PlayersRecoil()
+    {
+        playerRigidbody.AddForce(new Vector2(playerRigidbody.velocity.x, jumpSpeed));
+    }
 }

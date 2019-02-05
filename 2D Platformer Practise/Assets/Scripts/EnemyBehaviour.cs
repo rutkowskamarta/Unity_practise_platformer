@@ -7,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private GameObject enemyBody;
     [SerializeField] private GameObject lowerBound;
+    
 
     private Rigidbody2D enemyRigidbody;
     private SpriteRenderer enemySpriteRenderer;
@@ -41,7 +42,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Platform")
+        if(collision.gameObject.tag == "Wall")
         {
             ChangeDirection();
         }
