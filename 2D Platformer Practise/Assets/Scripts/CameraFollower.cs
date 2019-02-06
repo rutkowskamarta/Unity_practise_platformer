@@ -6,9 +6,10 @@ public class CameraFollower : MonoBehaviour {
 
     [SerializeField] private GameObject target;
     [SerializeField] private float smoothSpeed = 0.1f;
-    [SerializeField] private float minSpeed = 10f;
-    [SerializeField] private float maxSpeed = 100f;
     [SerializeField] private Vector3 offset;
+
+    private float maxSpeed = 10;
+    private float minSpeed = 1;
 
 	void LateUpdate ()
     {
@@ -17,12 +18,12 @@ public class CameraFollower : MonoBehaviour {
 
     private void SmoothCameraMovement()
     {
-        float currentTargetSpeed = target.GetComponent<Rigidbody2D>().velocity.magnitude;
-        float relativeSpeed = Mathf.InverseLerp(minSpeed, maxSpeed, currentTargetSpeed);
-        relativeSpeed = Mathf.SmoothStep(smoothSpeed, 1, relativeSpeed);
+        float currentTargetSpeed = target.GetComponent<Rigidbody2D>().velocity.magnitude/100;
+        float relativeSpeed = Mathf.SmoothStep(minSpeed, maxSpeed, currentTargetSpeed);
+        Debug.Log(relativeSpeed);
 
         Vector3 desiredPosition = target.transform.position + offset;
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, relativeSpeed);
+        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed*Time.deltaTime*relativeSpeed);
         transform.position = smoothPosition;
     }
 }

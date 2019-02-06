@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,7 +14,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer hurtMaskSprite;
     [SerializeField] private float recoilForce = 10;
 
-    
+    private const float cameraShakeTime = 1f;
+    private const float cameraShakeForce = 4f;
+    private const float maxColor = 1f;
+    private const float minColor = 0f;
+
     private Rigidbody2D playerRigidbody;
     private SpriteRenderer playerSpriteRenderer;
     private bool isGrounded;
@@ -47,11 +52,15 @@ public class PlayerController : MonoBehaviour
         }
         if(collision.gameObject.tag == "Enemy")
         {
-            StartCoroutine(FadeHurtVisualisation(1.0f, fadeSpeed));
+            StartCoroutine(FadeHurtVisualisation(maxColor, fadeSpeed));
             StartCoroutine(RestoreNormalLook());
+            EZCameraShake.CameraShaker.Instance.ShakeOnce(cameraShakeForce, cameraShakeForce, cameraShakeTime, cameraShakeTime);
+
+
 
         }
     }
+    
 
     private void PlayerMovement()
     {
@@ -134,7 +143,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator RestoreNormalLook()
     {
         yield return new WaitForSeconds(fadeTime);
-        StartCoroutine(FadeHurtVisualisation(0f, fadeSpeed));
+        StartCoroutine(FadeHurtVisualisation(minColor, fadeSpeed));
     }
 
     public void PlayersRecoil(int modifier)
