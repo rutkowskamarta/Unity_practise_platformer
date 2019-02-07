@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fadeTime = 0.5f;
     [SerializeField] private SpriteRenderer hurtMaskSprite;
     [SerializeField] private float recoilForce = 10;
+    [SerializeField] private float castForce = 20;
+
 
     private const float cameraShakeTime = 1f;
     private const float cameraShakeForce = 4f;
@@ -50,17 +52,16 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             isRecoiled = false;
         }
-        if(collision.gameObject.tag == "Enemy")
-        {
-            StartCoroutine(FadeHurtVisualisation(maxColor, fadeSpeed));
-            StartCoroutine(RestoreNormalLook());
-            EZCameraShake.CameraShaker.Instance.ShakeOnce(cameraShakeForce, cameraShakeForce, cameraShakeTime, cameraShakeTime);
 
-
-
-        }
     }
     
+    public void HurtColorChange()
+    {
+        StartCoroutine(FadeHurtVisualisation(maxColor, fadeSpeed));
+        StartCoroutine(RestoreNormalLook());
+        EZCameraShake.CameraShaker.Instance.ShakeOnce(cameraShakeForce, cameraShakeForce, cameraShakeTime, cameraShakeTime);
+
+    }
 
     private void PlayerMovement()
     {
@@ -152,5 +153,19 @@ public class PlayerController : MonoBehaviour
         playerRigidbody.AddForce(new Vector2(modifier*recoilForce, recoilForce), ForceMode2D.Impulse);
     }
 
-   
+    public void PlayersCastIntoRandomDirection()
+    {
+        isRecoiled = true;
+        playerRigidbody.AddForce(new Vector2(ChooseRandomDirection() * recoilForce, castForce), ForceMode2D.Impulse);
+
+    }
+
+    private int ChooseRandomDirection()
+    {
+        int number = Random.Range(0, 2);
+        if (number == 0)
+            return -1;
+        else
+            return 1;
+    }
 }

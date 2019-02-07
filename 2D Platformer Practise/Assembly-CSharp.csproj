@@ -72,9 +72,14 @@
     <Compile Include="Assets\Scripts\BetterJumpScript.cs" />
     <Compile Include="Assets\Scripts\CameraFollower.cs" />
     <Compile Include="Assets\Scripts\EnemyBehaviour.cs" />
-    <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\EnemyHealth.cs" />
+    <Compile Include="Assets\Scripts\HealthBarScript.cs" />
     <Compile Include="Assets\Scripts\PlayerAnimationController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PortalScript.cs" />
+    <Compile Include="Assets\Simple Scene Fade Load System\Scripts\Fader.cs" />
+    <Compile Include="Assets\Simple Scene Fade Load System\Scripts\Initiate.cs" />
+    <None Include="Assets\Simple Scene Fade Load System\ReadMeFirst.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/marar/Desktop/GitHub/Unity_2D_platformer_repo/2D Platformer Practise/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

@@ -5,19 +5,21 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour {
 
     [SerializeField] private float movementSpeed = 1;
-    [SerializeField] private GameObject enemyBody;
     [SerializeField] private GameObject lowerBound;
+    [SerializeField] private Collider2D headsCollider;
     [SerializeField] private PlayerController player;
+    [SerializeField] private float enemyDeathRecoilY = 0.5f;
     
 
     private Rigidbody2D enemyRigidbody;
+
     private SpriteRenderer enemySpriteRenderer;
     private int motionDirection;
     
     void Start ()
     {
-        enemyRigidbody = GetComponent<Rigidbody2D>();
-        enemySpriteRenderer = enemyBody.GetComponent<SpriteRenderer>();
+        enemyRigidbody =  transform.parent.GetComponent<Rigidbody2D>();
+        enemySpriteRenderer = GetComponent<SpriteRenderer>();
         motionDirection = ChooseRandomDirection();
     }
 	
@@ -50,6 +52,7 @@ public class EnemyBehaviour : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             player.PlayersRecoil(motionDirection);
+            player.HurtColorChange();
         }
        
         
@@ -73,5 +76,12 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         if (transform.position.y <= lowerBound.transform.position.y)
             Destroy(gameObject);
+    }
+
+    public void EnemyDeath()
+    {
+        GetComponent<Collider2D>().isTrigger = true;
+        headsCollider.isTrigger = true;
+        enemyRigidbody.AddForce(new Vector2(0, enemyDeathRecoilY), ForceMode2D.Impulse);
     }
 }

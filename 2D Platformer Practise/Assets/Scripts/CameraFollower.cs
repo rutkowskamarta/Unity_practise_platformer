@@ -20,7 +20,6 @@ public class CameraFollower : MonoBehaviour {
     {
         float currentTargetSpeed = target.GetComponent<Rigidbody2D>().velocity.magnitude/100;
         float relativeSpeed = Mathf.SmoothStep(minSpeed, maxSpeed, currentTargetSpeed);
-        Debug.Log(relativeSpeed);
 
         Vector3 desiredPosition = target.transform.position + offset;
         Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed*Time.deltaTime*relativeSpeed);
