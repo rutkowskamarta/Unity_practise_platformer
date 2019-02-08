@@ -11,6 +11,7 @@ public class PortalScript : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             Initiate.Fade(sceneName, Color.black, 2);
+            collision.gameObject.SetActive(false);
         }
     }
 }

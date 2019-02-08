@@ -65,13 +65,13 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !isRecoiled)
         {
             playerRigidbody.velocity = new Vector2(-movementSpeed, playerRigidbody.velocity.y);
             playerSpriteRenderer.flipX = true;
             IsWalking = true;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && !isRecoiled)
         {
             playerRigidbody.velocity = new Vector2(movementSpeed, playerRigidbody.velocity.y);
             playerSpriteRenderer.flipX = false;
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.Space) && isGrounded && !isRecoiled)
         {
             playerRigidbody.velocity = new Vector2(playerRigidbody.velocity.x, jumpSpeed);
             isGrounded = false;
