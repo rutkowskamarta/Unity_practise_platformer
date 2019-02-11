@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     public bool IsJumping = false;
     public bool IsWalking = false;
 
+    public bool IsMovingLeft = false;
+    public bool IsMovingRight = false;
+
     private float jumpTimeCounter = 0;
 
     void Start()
@@ -70,6 +73,8 @@ public class PlayerController : MonoBehaviour
             playerRigidbody.velocity = new Vector2(-movementSpeed, playerRigidbody.velocity.y);
             playerSpriteRenderer.flipX = true;
             IsWalking = true;
+            IsMovingRight = false;
+            IsMovingLeft = true;
         }
         else if (Input.GetKey(KeyCode.D) && !isRecoiled)
         {
@@ -77,14 +82,20 @@ public class PlayerController : MonoBehaviour
             playerSpriteRenderer.flipX = false;
             IsWalking = true;
 
+            IsMovingRight = true;
+            IsMovingLeft = false;
+
         }
-        else if(!isRecoiled)
+        else if (!isRecoiled)
         {
             playerRigidbody.velocity = new Vector2(0, playerRigidbody.velocity.y);
             IsWalking = false;
 
-        }
 
+            IsMovingRight = false;
+            IsMovingLeft = false;
+
+        }
     }
 
     private void PlayerStopMove()
@@ -151,6 +162,17 @@ public class PlayerController : MonoBehaviour
     {
         isRecoiled = true;
         playerRigidbody.AddForce(new Vector2(modifier*recoilForce, recoilForce), ForceMode2D.Impulse);
+        if(modifier < 0)
+        {
+            IsMovingLeft = true;
+            IsMovingRight = false;
+        }
+        else if (modifier > 0)
+        {
+            IsMovingLeft = false;
+            IsMovingRight = true;
+
+        }
     }
 
     public void PlayersCastIntoRandomDirection()

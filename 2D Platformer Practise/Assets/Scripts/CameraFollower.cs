@@ -11,18 +11,22 @@ public class CameraFollower : MonoBehaviour {
     private float maxSpeed = 10;
     private float minSpeed = 1;
 
-	void LateUpdate ()
+
+    void LateUpdate ()
     {
         SmoothCameraMovement();
 	}
 
     private void SmoothCameraMovement()
     {
-        float currentTargetSpeed = target.GetComponent<Rigidbody2D>().velocity.magnitude/100;
+        float currentTargetSpeed = target.GetComponent<Rigidbody2D>().velocity.magnitude / 100;
         float relativeSpeed = Mathf.SmoothStep(minSpeed, maxSpeed, currentTargetSpeed);
 
         Vector3 desiredPosition = target.transform.position + offset;
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed*Time.deltaTime*relativeSpeed);
+        Vector3 smoothPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime * relativeSpeed);
+
+
         transform.position = smoothPosition;
+        
     }
 }

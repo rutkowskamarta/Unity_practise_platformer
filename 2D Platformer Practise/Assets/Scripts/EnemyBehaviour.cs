@@ -45,7 +45,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Wall")
+        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy")
         {
             ChangeDirection();
         }
@@ -54,8 +54,15 @@ public class EnemyBehaviour : MonoBehaviour {
             player.PlayersRecoil(motionDirection);
             player.HurtColorChange();
         }
-       
-        
+               
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            ChangeDirection();
+        }
     }
 
     private void ChangeDirection()
