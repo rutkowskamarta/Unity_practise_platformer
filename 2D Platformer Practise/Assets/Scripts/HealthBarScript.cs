@@ -7,9 +7,9 @@ public class HealthBarScript : MonoBehaviour {
     [SerializeField] private float playersImpact = 0.5f;
     [SerializeField] private EnemyBehaviour enemy;
 
-    [SerializeField] private SpriteRenderer healthBarBackgroundSpriteRenderer;
-    [SerializeField] private SpriteRenderer healthBarSpriteRenderer;
-    [SerializeField] private SpriteRenderer healthBarBaseSpriteRenderer;
+    private SpriteRenderer healthBarBackgroundSpriteRenderer;
+    private SpriteRenderer healthBarSpriteRenderer;
+    private SpriteRenderer healthBarBaseSpriteRenderer;
 
 
     private Transform healthBar;

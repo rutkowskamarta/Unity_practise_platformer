@@ -192,7 +192,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1927289433453146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.34225, y: -0.1710658, z: -10}
+  m_LocalPosition: {x: -1.6401463, y: -0.24632195, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4325151098002334}
@@ -380,9 +380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playersImpact: 0.3
   enemy: {fileID: 114779285393137868}
-  healthBarBackgroundSpriteRenderer: {fileID: 0}
-  healthBarSpriteRenderer: {fileID: 0}
-  healthBarBaseSpriteRenderer: {fileID: 0}
 --- !u!114 &114608428222251308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -395,7 +392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarScript: {fileID: 114277154119963678}
-  player: {fileID: 0}
 --- !u!114 &114779285393137868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -408,9 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 1
-  lowerBound: {fileID: 0}
   headsCollider: {fileID: 61673223265185984}
-  player: {fileID: 0}
   enemyDeathRecoilY: 10
 --- !u!212 &212005469928547920
 SpriteRenderer:
@@ -538,7 +532,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: eac1daa8b0cac894984815a49a3c63f1, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0

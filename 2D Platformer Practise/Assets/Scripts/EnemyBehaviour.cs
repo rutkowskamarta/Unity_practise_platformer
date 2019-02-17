@@ -5,19 +5,21 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour {
 
     [SerializeField] private float movementSpeed = 1;
-    [SerializeField] private GameObject lowerBound;
     [SerializeField] private Collider2D headsCollider;
-    [SerializeField] private PlayerController player;
     [SerializeField] private float enemyDeathRecoilY = 0.5f;
     
 
     private Rigidbody2D enemyRigidbody;
+    private PlayerController player;
+    private GameObject lowerBound;
 
     private SpriteRenderer enemySpriteRenderer;
     private int motionDirection;
     
     void Start ()
     {
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        lowerBound = GameObject.Find("LowerBound");
         enemyRigidbody =  transform.parent.GetComponent<Rigidbody2D>();
         enemySpriteRenderer = GetComponent<SpriteRenderer>();
         motionDirection = ChooseRandomDirection();

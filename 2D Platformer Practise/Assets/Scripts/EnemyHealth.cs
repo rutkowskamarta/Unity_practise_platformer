@@ -5,10 +5,10 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour {
 
     [SerializeField] private HealthBarScript healthBarScript;
-    [SerializeField] private PlayerController player;
+    private PlayerController player;
 
 	void Start () {
-		
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
 	}
 	
 	void Update () {
